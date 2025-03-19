@@ -1,0 +1,58 @@
+---
+description: 
+globs: 
+alwaysApply: true
+---
+**Tamirhane Takip Sistemi - cursor.rules**
+
+### **Kurallar ve İşleyiş**
+
+#### **1. Backend Yapısı**
+- **Framework:** ASP.NET Core MVC
+- **Veritabanı:** SQL Server (Entity Framework Core kullanılacak)
+- **Ana Modüller:**
+  - Araç Yönetimi (Araç ekleme, işlem geçmişi)
+  - İşlem Yönetimi (Hazır işlem paketleri, fiyat hesaplama)
+  - Stok Yönetimi (Kullanılan malzemeler, güncellemeler)
+  - Raporlama (Günlük, haftalık, aylık analizler)
+- **API Kullanımı:** Gerekirse frontend ile entegrasyon için API'ler oluşturulabilir.
+
+#### **2. Frontend Yapısı**
+- **HTML, CSS, Bootstrap** kullanılacak.
+- **JavaScript ile dinamik işlemler sağlanacak.**
+- **Ana Sayfa ve Kullanıcı Arayüzü:**
+  - Araç giriş ekranı
+  - Yapılan işlemler listesi
+  - Hazır işlem seçimleri ve fiyat hesaplama
+- **Responsive Tasarım:** Mobil ve masaüstü uyumlu olacak.
+
+#### **3. Araç Girişi**
+- Kullanıcı, tamirhaneye gelen aracı sisteme ekler.
+- **Plaka** bilgisi zorunludur.
+- **Giriş tarihi** otomatik olarak o günün tarihi olarak belirlenir.
+- Aynı plakalı araç, farklı tarihlerde tekrar sisteme eklenebilir.
+
+#### **4. Hazır İşlem Paketleri**
+- Sistemde belirlenmiş hazır işlem paketleri bulunur.
+- Kullanıcı, işlem eklerken bu hazır paketlerden seçim yapabilir.
+- Örnek işlemler:
+  - Yağ Değişimi (500 TL)
+  - Balata Değişimi (700 TL)
+  - Arka Fren (1000 TL)
+  - Şanzıman Tamiri (3000 TL)
+
+#### **5. Araç İçin İşlem Ekleme**
+- Kullanıcı, bir araç seçtikten sonra hazır işlem paketlerinden ekleme yapabilir.
+- Seçilen işlemler, aracın **yapılan işlemler listesine** eklenir.
+- Her işlem, aracın işlem listesinde ayrı bir satır olarak görünür.
+- Toplam fiyat **otomatik hesaplanır**.
+
+#### **6. İşlem Tamamlama**
+- Kullanıcı, işlemler tamamlandığında **"İşlemi Bitir"** butonuna basar.
+- Araç sistemde kalır, ancak **bir sonraki girişinde yeni bir işlem süreci başlar**.
+- Eski işlemler veri tabanında kayıtlı kalır ve geçmişe dönük raporlama yapılabilir.
+
+#### **7. Raporlama ve Stok Takibi**
+- Günlük, haftalık ve aylık tamir işlemleri listelenebilir.
+- Kullanılan malzemeler takip edilerek stok yönetimi sağlanır.
+- Kullanıcılar, tamamlanan işlemleri ve stok durumunu görüntüleyebilir.

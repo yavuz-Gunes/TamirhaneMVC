@@ -1,0 +1,17 @@
+@model TamirhaneMVC.Models.Arac
+
+@{
+    ViewData["Title"] = "Araç Düzenle";
+}
+
+<h2>Araç Düzenle</h2>
+
+<form method="post">
+    <input type="hidden" asp-for="Id" />
+    <div class="form-group">
+        <label>Plaka</label>
+        <input type="text" asp-for="Plaka" class="form-control" required />
+    </div>
+    <button type="submit" class="btn btn-primary mt-3">Güncelle</button>
+    <a href="/Arac" class="btn btn-secondary mt-3">İptal</a>
+</form>

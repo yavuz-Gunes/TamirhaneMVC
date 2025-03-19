@@ -1,0 +1,16 @@
+@model TamirhaneMVC.Models.Arac
+
+@{
+    ViewData["Title"] = "Yeni Araç Ekle";
+}
+
+<h2>Yeni Araç Ekle</h2>
+
+<form method="post">
+    <div class="form-group">
+        <label>Plaka</label>
+        <input type="text" asp-for="Plaka" class="form-control" required />
+    </div>
+    <button type="submit" class="btn btn-success mt-3">Kaydet</button>
+    <a href="/Arac" class="btn btn-secondary mt-3">İptal</a>
+</form>
