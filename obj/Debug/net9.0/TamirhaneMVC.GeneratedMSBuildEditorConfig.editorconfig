@@ -44,12 +44,32 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQXJhY1xTaWwuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
+[C:/Project/TamirhaneMVC/Views/HazirIslem/Duzenle.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSGF6aXJJc2xlbVxEdXplbmxlLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Project/TamirhaneMVC/Views/HazirIslem/Ekle.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSGF6aXJJc2xlbVxFa2xlLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Project/TamirhaneMVC/Views/HazirIslem/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSGF6aXJJc2xlbVxJbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Project/TamirhaneMVC/Views/HazirIslem/Sil.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSGF6aXJJc2xlbVxTaWwuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Project/TamirhaneMVC/Views/Home/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxJbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Project/TamirhaneMVC/Views/Home/Privacy.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxQcml2YWN5LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Project/TamirhaneMVC/Views/Home/TekSayfa.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxUZWtTYXlmYS5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Project/TamirhaneMVC/Views/Shared/Error.cshtml]

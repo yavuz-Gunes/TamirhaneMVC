@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("TamirhaneMVC")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+48d8aa5695ef7d66a0dcee5c8b68613cd6819b31")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+81d1d5bb343a27f5b6e413119883532327a7a3e6")]
 [assembly: System.Reflection.AssemblyProductAttribute("TamirhaneMVC")]
 [assembly: System.Reflection.AssemblyTitleAttribute("TamirhaneMVC")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

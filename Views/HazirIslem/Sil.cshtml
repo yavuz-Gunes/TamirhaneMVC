@@ -1,0 +1,13 @@
+@model TamirhaneMVC.Models.HazirIslem
+
+@{
+    ViewData["Title"] = "Hazır İşlem Sil";
+}
+
+<h2>Hazır İşlem Sil</h2>
+<p><strong>@Model.IslemAdi</strong> işlemini silmek istediğinizden emin misiniz?</p>
+
+<form method="post">
+    <button type="submit" class="btn btn-danger">Sil</button>
+    <a href="/HazirIslem" class="btn btn-secondary">İptal</a>
+</form>

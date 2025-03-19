@@ -229,3 +229,4 @@ C:\Project\TamirhaneMVC\obj\Debug\net9.0\refint\TamirhaneMVC.dll
 C:\Project\TamirhaneMVC\obj\Debug\net9.0\TamirhaneMVC.pdb
 C:\Project\TamirhaneMVC\obj\Debug\net9.0\TamirhaneMVC.genruntimeconfig.cache
 C:\Project\TamirhaneMVC\obj\Debug\net9.0\ref\TamirhaneMVC.dll
+C:\Project\TamirhaneMVC\obj\Debug\net9.0\TamirhaneMVC.sourcelink.json

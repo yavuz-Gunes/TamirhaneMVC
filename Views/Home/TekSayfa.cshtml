@@ -1,0 +1,113 @@
+@model TamirhaneMVC.Models.Arac
+@{
+    ViewData["Title"] = "Araç Girişi ve İşlem Seçimi";
+    var hazirIslemler = ViewBag.HazirIslemler as List<TamirhaneMVC.Models.HazirIslem>;
+}
+
+<h2>Araç Girişi ve İşlem Seçimi</h2>
+
+<!-- Step 1: Araç Bilgisi -->
+<div id="step1">
+    <h3>Araç Bilgisi</h3>
+    <form id="aracForm">
+        <div class="form-group">
+            <label>Plaka</label>
+            <input type="text" id="plaka" class="form-control" required />
+        </div>
+        <button type="button" class="btn btn-primary mt-3" onclick="ileri(2)">İlerle</button>
+    </form>
+</div>
+
+<!-- Step 2: İşlem Seçimi (Başlangıçta Gizli) -->
+<!-- Step 2: İşlem Seçimi -->
+<div id="step2" style="display: none;">
+    <h3>Yapılacak İşlemler</h3>
+    <form id="islemForm">
+        <ul class="list-group" id="islemListesi">
+            @if (hazirIslemler.Any())
+            {
+                @foreach (var islem in hazirIslemler)
+                {
+                    <li class="list-group-item">
+                        <input type="checkbox" name="islemler" value="@islem.Id" />
+                        @islem.IslemAdi - @islem.Fiyat TL
+                    </li>
+                }
+            }
+        </ul>
+        
+        <a href="/HazirIslem/Ekle" class="btn btn-warning mt-3">Yeni İşlem Ekle</a>
+
+        <button type="button" class="btn btn-primary mt-3" onclick="ileri(3)">İlerle</button>
+    </form>
+</div>
+
+
+<!-- Step 3: Onay Ekranı (Başlangıçta Gizli) -->
+<div id="step3" style="display: none;">
+    <h3>Onay Ekranı</h3>
+    <p><strong>Plaka:</strong> <span id="onayPlaka"></span></p>
+    <h4>Seçilen İşlemler</h4>
+    <ul id="onayIslemler"></ul>
+    <button type="button" class="btn btn-success mt-3" onclick="kaydet()">Tamamla</button>
+</div>
+
+<script>
+    let aracPlaka = "";
+    let secilenIslemler = [];
+
+    function ileri(adim) {
+        if (adim === 2) {
+            aracPlaka = document.getElementById("plaka").value;
+            if (aracPlaka.trim() === "") {
+                alert("Lütfen plaka giriniz!");
+                return;
+            }
+        }
+        if (adim === 3) {
+            secilenIslemler = [];
+            document.querySelectorAll('input[name="islemler"]:checked').forEach((el) => {
+                secilenIslemler.push(el.value);
+            });
+
+            if (secilenIslemler.length === 0) {
+                alert("Lütfen en az bir işlem seçiniz!");
+                return;
+            }
+
+            document.getElementById("onayPlaka").innerText = aracPlaka;
+            let list = document.getElementById("onayIslemler");
+            list.innerHTML = "";
+            secilenIslemler.forEach((islemId) => {
+                let item = document.querySelector(`input[value="${islemId}"]`).parentElement.innerText;
+                let li = document.createElement("li");
+                li.innerText = item;
+                list.appendChild(li);
+            });
+        }
+
+        // Yeni adımı aç, ancak önceki adımları kapatma
+        document.getElementById(`step${adim}`).style.display = "block";
+    }
+
+    function kaydet() {
+        fetch("/Home/Kaydet", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ plaka: aracPlaka, secilenIslemler: secilenIslemler })
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                alert("Araç ve işlemler başarıyla kaydedildi!");
+                location.reload();
+            } else {
+                alert("Bir hata oluştu: " + data.message);
+            }
+        })
+        .catch(error => {
+            console.error("Hata:", error);
+            alert("Kayıt sırasında bir hata oluştu. Konsolu kontrol edin.");
+        });
+    }
+</script>
