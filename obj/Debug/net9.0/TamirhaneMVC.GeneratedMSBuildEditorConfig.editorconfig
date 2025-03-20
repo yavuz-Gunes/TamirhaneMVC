@@ -28,6 +28,10 @@ build_property._RazorSourceGeneratorDebug =
 build_property.EffectiveAnalysisLevelStyle = 9.0
 build_property.EnableCodeStyleSeverity = 
 
+[C:/Project/TamirhaneMVC/Views/Arac/Detay.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQXJhY1xEZXRheS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Project/TamirhaneMVC/Views/Arac/Duzenle.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQXJhY1xEdXplbmxlLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
@@ -64,12 +68,36 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxJbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
+[C:/Project/TamirhaneMVC/Views/Home/IslemEkle.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxJc2xlbUVrbGUuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Project/TamirhaneMVC/Views/Home/Privacy.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxQcml2YWN5LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Project/TamirhaneMVC/Views/Home/TekSayfa.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxUZWtTYXlmYS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Project/TamirhaneMVC/Views/Parca/Duzenle.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGFyY2FcRHV6ZW5sZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Project/TamirhaneMVC/Views/Parca/Ekle.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGFyY2FcRWtsZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Project/TamirhaneMVC/Views/Parca/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGFyY2FcSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Project/TamirhaneMVC/Views/Parca/Sil.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGFyY2FcU2lsLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Project/TamirhaneMVC/Views/Parca/StokEkle.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGFyY2FcU3Rva0VrbGUuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Project/TamirhaneMVC/Views/Shared/Error.cshtml]

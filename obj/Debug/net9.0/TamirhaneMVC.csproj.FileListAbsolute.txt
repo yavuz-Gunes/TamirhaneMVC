@@ -147,10 +147,10 @@ C:\Project\TamirhaneMVC\obj\Debug\net9.0\TamirhaneMVC.csproj.CoreCompileInputs.c
 C:\Project\TamirhaneMVC\obj\Debug\net9.0\TamirhaneMVC.MvcApplicationPartsAssemblyInfo.cache
 C:\Project\TamirhaneMVC\obj\Debug\net9.0\TamirhaneMVC.RazorAssemblyInfo.cache
 C:\Project\TamirhaneMVC\obj\Debug\net9.0\TamirhaneMVC.RazorAssemblyInfo.cs
+C:\Project\TamirhaneMVC\obj\Debug\net9.0\TamirhaneMVC.sourcelink.json
 C:\Project\TamirhaneMVC\obj\Debug\net9.0\scopedcss\Views\Shared\_Layout.cshtml.rz.scp.css
 C:\Project\TamirhaneMVC\obj\Debug\net9.0\scopedcss\bundle\TamirhaneMVC.styles.css
 C:\Project\TamirhaneMVC\obj\Debug\net9.0\scopedcss\projectbundle\TamirhaneMVC.bundle.scp.css
-C:\Project\TamirhaneMVC\obj\Debug\net9.0\compressed\q9k01qh52j-b9sayid5wm.gz
 C:\Project\TamirhaneMVC\obj\Debug\net9.0\compressed\8ligs7bzeh-61n19gt1b8.gz
 C:\Project\TamirhaneMVC\obj\Debug\net9.0\compressed\42bjtr311z-xtxxf3hu2r.gz
 C:\Project\TamirhaneMVC\obj\Debug\net9.0\compressed\yz5dda6ook-bqjiyaj88i.gz
@@ -229,4 +229,4 @@ C:\Project\TamirhaneMVC\obj\Debug\net9.0\refint\TamirhaneMVC.dll
 C:\Project\TamirhaneMVC\obj\Debug\net9.0\TamirhaneMVC.pdb
 C:\Project\TamirhaneMVC\obj\Debug\net9.0\TamirhaneMVC.genruntimeconfig.cache
 C:\Project\TamirhaneMVC\obj\Debug\net9.0\ref\TamirhaneMVC.dll
-C:\Project\TamirhaneMVC\obj\Debug\net9.0\TamirhaneMVC.sourcelink.json
+C:\Project\TamirhaneMVC\obj\Debug\net9.0\compressed\q9k01qh52j-gvzrbcj6nm.gz

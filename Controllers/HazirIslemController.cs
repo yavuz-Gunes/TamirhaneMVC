@@ -16,8 +16,8 @@ namespace TamirhaneMVC.Controllers
 
         public IActionResult Index()
         {
-            var hazirIslemler = _context.HazirIslemler.ToList();
-            return View(hazirIslemler);
+            var islemler = _context.HazirIslemler.ToList();
+            return View(islemler);
         }
 
         public IActionResult Ekle()
@@ -25,55 +25,65 @@ namespace TamirhaneMVC.Controllers
             return View();
         }
 
-       [HttpPost]
-public IActionResult Ekle(HazirIslem islem)
-{
-    if (ModelState.IsValid)
-    {
-        _context.HazirIslemler.Add(islem);
-        _context.SaveChanges();
-        return Redirect("/Home/TekSayfa"); // İşlem ekleyince Tek Sayfa sistemine geri dönecek
-    }
-    return View(islem);
-}
-
-
-        public IActionResult Duzenle(int id)
-        {
-            var islem = _context.HazirIslemler.Find(id);
-            if (islem == null) return NotFound();
-            return View(islem);
-        }
-
         [HttpPost]
-        public IActionResult Duzenle(HazirIslem islem)
+        public IActionResult Ekle(HazirIslem hazirIslem)
         {
             if (ModelState.IsValid)
             {
-                _context.HazirIslemler.Update(islem);
+                _context.HazirIslemler.Add(hazirIslem);
                 _context.SaveChanges();
-                return RedirectToAction("Index");
+                TempData["Mesaj"] = "İşçilik başarıyla eklendi.";
+                return RedirectToAction(nameof(Index));
             }
-            return View(islem);
+            return View(hazirIslem);
+        }
+
+        public IActionResult Duzenle(int id)
+        {
+            var hazirIslem = _context.HazirIslemler.Find(id);
+            if (hazirIslem == null)
+            {
+                return NotFound();
+            }
+            return View(hazirIslem);
+        }
+
+        [HttpPost]
+        public IActionResult Duzenle(HazirIslem hazirIslem)
+        {
+            if (ModelState.IsValid)
+            {
+                _context.HazirIslemler.Update(hazirIslem);
+                _context.SaveChanges();
+                TempData["Mesaj"] = "İşçilik başarıyla güncellendi.";
+                return RedirectToAction(nameof(Index));
+            }
+            return View(hazirIslem);
         }
 
         public IActionResult Sil(int id)
         {
-            var islem = _context.HazirIslemler.Find(id);
-            if (islem == null) return NotFound();
-            return View(islem);
+            var hazirIslem = _context.HazirIslemler.Find(id);
+            if (hazirIslem == null)
+            {
+                return NotFound();
+            }
+            return View(hazirIslem);
         }
 
-        [HttpPost, ActionName("Sil")]
-        public IActionResult SilOnayla(int id)
+        [HttpPost]
+        public IActionResult SilOnay(int id)
         {
-            var islem = _context.HazirIslemler.Find(id);
-            if (islem != null)
+            var hazirIslem = _context.HazirIslemler.Find(id);
+            if (hazirIslem == null)
             {
-                _context.HazirIslemler.Remove(islem);
-                _context.SaveChanges();
+                return NotFound();
             }
-            return RedirectToAction("Index");
+
+            _context.HazirIslemler.Remove(hazirIslem);
+            _context.SaveChanges();
+            TempData["Mesaj"] = "İşçilik başarıyla silindi.";
+            return RedirectToAction(nameof(Index));
         }
     }
 }

@@ -1,113 +1,952 @@
-@model TamirhaneMVC.Models.Arac
 @{
-    ViewData["Title"] = "Araç Girişi ve İşlem Seçimi";
-    var hazirIslemler = ViewBag.HazirIslemler as List<TamirhaneMVC.Models.HazirIslem>;
+    ViewData["Title"] = "Araç İşlem Paneli";
 }
 
-<h2>Araç Girişi ve İşlem Seçimi</h2>
-
-<!-- Step 1: Araç Bilgisi -->
-<div id="step1">
-    <h3>Araç Bilgisi</h3>
-    <form id="aracForm">
-        <div class="form-group">
-            <label>Plaka</label>
-            <input type="text" id="plaka" class="form-control" required />
+<div class="row mb-4">
+    <div class="col-lg-9 col-md-8">
+        <div class="page-header d-flex align-items-center gap-2 mb-4">
+            <i class="fas fa-tools text-primary fs-3"></i>
+            <h2 class="m-0">Tamirhane İşlem Paneli</h2>
         </div>
-        <button type="button" class="btn btn-primary mt-3" onclick="ileri(2)">İlerle</button>
-    </form>
+    </div>
+    <div class="col-lg-3 col-md-4">
+        <div class="card shadow-sm h-100">
+            <div class="card-body p-3">
+                <h5 class="card-title d-flex align-items-center mb-3">
+                    <i class="fas fa-calendar-day text-primary me-2"></i>
+                    Bugünkü İşlemler
+                </h5>
+                <div id="bugun-islemler" class="small">
+                    <div class="text-center p-3">
+                        <div class="spinner-border text-primary" role="status">
+                            <span class="visually-hidden">Yükleniyor...</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 
-<!-- Step 2: İşlem Seçimi (Başlangıçta Gizli) -->
-<!-- Step 2: İşlem Seçimi -->
-<div id="step2" style="display: none;">
-    <h3>Yapılacak İşlemler</h3>
-    <form id="islemForm">
-        <ul class="list-group" id="islemListesi">
-            @if (hazirIslemler.Any())
-            {
-                @foreach (var islem in hazirIslemler)
-                {
-                    <li class="list-group-item">
-                        <input type="checkbox" name="islemler" value="@islem.Id" />
-                        @islem.IslemAdi - @islem.Fiyat TL
-                    </li>
+<div class="row mb-4">
+    <div class="col-md-3 col-sm-6 mb-3 mb-md-0">
+        <div class="statistic-card red">
+            <div>
+                <div class="card-value">0</div>
+                <div class="card-label">Bugün Gelen Araçlar</div>
+            </div>
+            <i class="fas fa-car-side card-icon"></i>
+        </div>
+    </div>
+    <div class="col-md-3 col-sm-6 mb-3 mb-md-0">
+        <div class="statistic-card blue">
+            <div>
+                <div class="card-value">0</div>
+                <div class="card-label">Devam Eden İşlemler</div>
+            </div>
+            <i class="fas fa-tools card-icon"></i>
+        </div>
+    </div>
+    <div class="col-md-3 col-sm-6 mb-3 mb-md-0">
+        <div class="statistic-card green">
+            <div>
+                <div class="card-value" id="bugunKazanc">0₺</div>
+                <div class="card-label">Bugünkü Kazanç</div>
+            </div>
+            <i class="fas fa-lira-sign card-icon"></i>
+        </div>
+    </div>
+    <div class="col-md-3 col-sm-6">
+        <div class="statistic-card orange">
+            <div>
+                <div class="card-value">0</div>
+                <div class="card-label">Tamamlanan İşlemler</div>
+            </div>
+            <i class="fas fa-check-circle card-icon"></i>
+        </div>
+    </div>
+</div>
+
+<!-- Ana Adımlar -->
+<div class="card shadow">
+    <div class="card-header bg-primary text-white p-0">
+        <ul class="nav nav-tabs card-header-tabs">
+            <li class="nav-item">
+                <a class="nav-link active bg-white text-primary" id="step1-tab" href="#step1" onclick="tabGoster(1)">
+                    <i class="fas fa-car"></i> 1. Araç Plakası
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link text-white" id="step2-tab" href="#step2" onclick="tabGoster(2)">
+                    <i class="fas fa-tools"></i> 2. İşçilik Seçimi
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link text-white" id="step3-tab" href="#step3" onclick="tabGoster(3)">
+                    <i class="fas fa-cogs"></i> 3. Parça Seçimi
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link text-white" id="step4-tab" href="#step4" onclick="tabGoster(4)">
+                    <i class="fas fa-clipboard-check"></i> 4. Özet ve Onay
+                </a>
+            </li>
+        </ul>
+    </div>
+    <div class="card-body">
+        <!-- Step 1: Plaka Girişi -->
+        <div id="step1" class="tab-pane active">
+            <div class="row">
+                <div class="col-lg-6 mb-4 mb-lg-0">
+                    <h3 class="mb-4 fw-bold"><i class="fas fa-keyboard text-primary me-2"></i> Araç Plakasını Girin</h3>
+                    
+                    <p class="text-muted mb-4">
+                        Bakım/onarım için gelen aracın plakasını girin. Daha önce kayıtlı bir araç ise bilgileri otomatik olarak doldurulacaktır.
+                    </p>
+                    
+                    <div class="form-group mb-4">
+                        <div class="input-group input-group-lg">
+                            <span class="input-group-text bg-primary text-white">
+                                <i class="fas fa-car"></i>
+                            </span>
+                            <input type="text" id="plaka" class="form-control form-control-lg shadow-sm" 
+                                placeholder="Plaka Girin (Örn: 34ABC123)" autocomplete="off" />
+                        </div>
+                        <small class="form-text text-muted">Plaka bilgisi büyük harflerle ve boşluksuz girilmelidir.</small>
+                    </div>
+                    
+                    <button type="button" class="btn btn-lg btn-primary w-100" onclick="plakaKontrolVeIleri()">
+                        <i class="fas fa-arrow-right me-2"></i> İşçilik Seçimine İlerle
+                    </button>
+                </div>
+                <div class="col-lg-6 d-flex flex-column justify-content-center align-items-center">
+                    <div class="plaka-card mb-4">
+                        <span class="plaka-text"><span class="plaka-tr">TR</span> <span id="plakaOnizleme">__________</span></span>
+                    </div>
+                    
+                    <div class="card border-0 shadow-sm w-100 mt-3">
+                        <div class="card-header bg-light">
+                            <h5 class="card-title mb-0"><i class="fas fa-history text-primary me-2"></i> Son İşlemler</h5>
+                        </div>
+                        <div class="card-body p-0">
+                            <div class="list-group list-group-flush">
+                                <a href="#" class="list-group-item list-group-item-action" id="sonIslemler">
+                                    <div class="text-center p-3 text-muted">
+                                        <i class="fas fa-search me-2"></i> Plaka girin
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Step 2: İşçilik Seçimi -->
+        <div id="step2" class="tab-pane" style="display: none;">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h3 class="fw-bold mb-0"><i class="fas fa-tools text-primary me-2"></i> İşçilik Seçimi</h3>
+                <div>
+                    <button type="button" class="btn btn-outline-secondary me-2" onclick="ileri(1)">
+                        <i class="fas fa-arrow-left me-2"></i> Geri
+                    </button>
+                    <a href="/HazirIslem/Index" class="btn btn-outline-primary btn-sm" target="_blank">
+                        <i class="fas fa-cog me-1"></i> İşçilik Yönetimi
+                    </a>
+                </div>
+            </div>
+            
+            <div class="alert alert-info d-flex align-items-center">
+                <i class="fas fa-info-circle me-2 fs-5"></i> 
+                <div>Araç için yapılacak işçilikleri aşağıdan seçin. İşçilik seçiminden sonra parça seçimine geçebilirsiniz.</div>
+            </div>
+            
+            <div class="card shadow-sm mb-3">
+                <div class="card-header bg-light">
+                    <div class="row align-items-center">
+                        <div class="col-md-6">
+                            <h5 class="card-title mb-0"><i class="fas fa-list-check text-primary me-2"></i> İşçilik Listesi</h5>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="input-group">
+                                <input type="text" class="form-control" id="islemAra" placeholder="İşçilik Ara...">
+                                <button class="btn btn-outline-secondary" type="button">
+                                    <i class="fas fa-search"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body p-0">
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead class="table-light">
+                                <tr>
+                                    <th style="width: 60px;" class="text-center">Seç</th>
+                                    <th>İşçilik Adı</th>
+                                    <th style="width: 200px;" class="text-end">Fiyat</th>
+                                </tr>
+                            </thead>
+                            <tbody id="islemListesi">
+                                <tr>
+                                    <td colspan="3" class="text-center py-3">
+                                        <div class="spinner-border text-primary" role="status">
+                                            <span class="visually-hidden">Yükleniyor...</span>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="card-footer bg-light d-flex justify-content-between align-items-center">
+                    <div>
+                        <span class="fw-bold">Seçilen İşçilik: </span>
+                        <span id="secilen-iscilik-sayi">0</span>
+                    </div>
+                    <div>
+                        <span class="fw-bold">Toplam: </span>
+                        <span class="text-primary fw-bold" id="secilen-iscilik-toplam">0.00₺</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="d-flex justify-content-end">
+                <button type="button" class="btn btn-primary px-4" onclick="ileri(3)">
+                    Parça Seçimine İlerle <i class="fas fa-arrow-right ms-2"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Step 3: Kullanılan Parçalar -->
+        <div id="step3" class="tab-pane" style="display: none;">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h3 class="fw-bold mb-0"><i class="fas fa-cogs text-primary me-2"></i> Kullanılan Parçalar</h3>
+                <div>
+                    <button type="button" class="btn btn-outline-secondary me-2" onclick="ileri(2)">
+                        <i class="fas fa-arrow-left me-2"></i> Geri
+                    </button>
+                    <a href="/Parca/Index" class="btn btn-outline-primary btn-sm" target="_blank">
+                        <i class="fas fa-cog me-1"></i> Parça Yönetimi
+                    </a>
+                </div>
+            </div>
+            
+            <div class="alert alert-info d-flex align-items-center">
+                <i class="fas fa-info-circle me-2 fs-5"></i>
+                <div>Kullanılacak parçaları aşağıdan seçin. İsterseniz bu adımı atlayabilirsiniz.</div>
+            </div>
+            
+            <div class="card shadow-sm mb-3">
+                <div class="card-header bg-light">
+                    <div class="row align-items-center">
+                        <div class="col-md-6">
+                            <h5 class="card-title mb-0"><i class="fas fa-list-check text-primary me-2"></i> Parça Listesi</h5>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="input-group">
+                                <input type="text" class="form-control" id="parcaAra" placeholder="Parça Ara...">
+                                <button class="btn btn-outline-secondary" type="button">
+                                    <i class="fas fa-search"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body p-0">
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead class="table-light">
+                                <tr>
+                                    <th style="width: 60px;" class="text-center">Seç</th>
+                                    <th>Parça Adı</th>
+                                    <th style="width: 200px;" class="text-end">Fiyat</th>
+                                </tr>
+                            </thead>
+                            <tbody id="parcaListesi">
+                                <tr>
+                                    <td colspan="3" class="text-center py-3">
+                                        <div class="spinner-border text-primary" role="status">
+                                            <span class="visually-hidden">Yükleniyor...</span>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="card-footer bg-light d-flex justify-content-between align-items-center">
+                    <div>
+                        <span class="fw-bold">Seçilen Parça: </span>
+                        <span id="secilen-parca-sayi">0</span>
+                    </div>
+                    <div>
+                        <span class="fw-bold">Toplam: </span>
+                        <span class="text-primary fw-bold" id="secilen-parca-toplam">0.00₺</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="d-flex justify-content-end">
+                <button type="button" class="btn btn-primary px-4" onclick="ileri(4)">
+                    Özet ve Onaya İlerle <i class="fas fa-arrow-right ms-2"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Step 4: Özet ve Toplam Fiyat -->
+        <div id="step4" class="tab-pane" style="display: none;">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h3 class="fw-bold mb-0"><i class="fas fa-clipboard-check text-primary me-2"></i> İşlem Özeti</h3>
+                <button type="button" class="btn btn-outline-secondary" onclick="ileri(3)">
+                    <i class="fas fa-arrow-left me-2"></i> Geri
+                </button>
+            </div>
+            
+            <div class="row">
+                <div class="col-lg-7">
+                    <div class="card shadow-sm mb-4">
+                        <div class="card-header bg-light">
+                            <h5 class="card-title mb-0">
+                                <i class="fas fa-car text-primary me-2"></i> Araç Bilgileri
+                            </h5>
+                        </div>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <div class="plaka-card mb-2">
+                                        <span class="plaka-text"><span class="plaka-tr">TR</span> <span id="ozetPlaka">_______</span></span>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <p class="mb-1 text-muted">Giriş Tarihi:</p>
+                                    <p class="fw-bold"><i class="fas fa-calendar me-2"></i> @DateTime.Now.ToString("dd.MM.yyyy HH:mm")</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card shadow-sm mb-4">
+                        <div class="card-header bg-light">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <h5 class="card-title mb-0">
+                                    <i class="fas fa-tools text-primary me-2"></i> Seçilen İşçilikler
+                                </h5>
+                                <span class="badge bg-primary" id="ozetIscilikSayi">0</span>
+                            </div>
+                        </div>
+                        <div class="card-body p-0">
+                            <div class="table-responsive">
+                                <table class="table table-hover mb-0">
+                                    <thead class="table-light">
+                                        <tr>
+                                            <th>İşçilik Adı</th>
+                                            <th style="width: 150px;" class="text-end">Fiyat</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="ozetIslemler">
+                                        <tr>
+                                            <td colspan="2" class="text-center py-3 text-muted">
+                                                <i class="fas fa-info-circle me-2"></i> Henüz işçilik seçilmedi
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card shadow-sm mb-4">
+                        <div class="card-header bg-light">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <h5 class="card-title mb-0">
+                                    <i class="fas fa-cogs text-primary me-2"></i> Seçilen Parçalar
+                                </h5>
+                                <span class="badge bg-primary" id="ozetParcaSayi">0</span>
+                            </div>
+                        </div>
+                        <div class="card-body p-0">
+                            <div class="table-responsive">
+                                <table class="table table-hover mb-0">
+                                    <thead class="table-light">
+                                        <tr>
+                                            <th>Parça Adı</th>
+                                            <th style="width: 150px;" class="text-end">Fiyat</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="ozetParcalar">
+                                        <tr>
+                                            <td colspan="2" class="text-center py-3 text-muted">
+                                                <i class="fas fa-info-circle me-2"></i> Henüz parça seçilmedi
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-lg-5">
+                    <div class="card shadow-sm mb-4 sticky-top" style="top: 90px;">
+                        <div class="card-header bg-primary text-white">
+                            <h5 class="card-title mb-0">
+                                <i class="fas fa-calculator me-2"></i> Fiyat Özeti
+                            </h5>
+                        </div>
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between mb-2">
+                                <span>İşçilik Toplamı:</span>
+                                <span class="fw-bold" id="ozetIscilikToplam">0.00₺</span>
+                            </div>
+                            <div class="d-flex justify-content-between mb-2">
+                                <span>Parça Toplamı:</span>
+                                <span class="fw-bold" id="ozetParcaToplam">0.00₺</span>
+                            </div>
+                            <hr class="my-3">
+                            <div class="d-flex justify-content-between align-items-center mb-3">
+                                <span class="fs-5">Genel Toplam:</span>
+                                <span class="fs-4 fw-bold text-primary" id="genelToplam">0.00₺</span>
+                            </div>
+                            
+                            <div class="form-group mb-4">
+                                <label for="notlar" class="form-label">Ekstra Notlar:</label>
+                                <textarea id="notlar" class="form-control" rows="3" placeholder="Eklemek istediğiniz notlar..."></textarea>
+                            </div>
+                            
+                            <button type="button" class="btn btn-success w-100 btn-lg" id="islemKaydet" onclick="kaydet()">
+                                <i class="fas fa-save me-2"></i> İşlemi Kaydet
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Seçilen İşlemler -->
+<div class="toast-container position-fixed bottom-0 end-0 p-3" style="z-index: 1100">
+    <div id="islemSecimToast" class="toast align-items-center text-white bg-primary border-0" role="alert" aria-live="assertive" aria-atomic="true">
+        <div class="d-flex">
+            <div class="toast-body">
+                <i class="fas fa-check-circle me-2"></i> <span id="islemSecimMesaj"></span>
+            </div>
+            <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Kapat"></button>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        let aracPlaka = "";
+        let secilenIslemler = [];
+        let secilenParcalar = [];
+        let toplamFiyat = 0;
+        
+        // Sayfa yüklendiğinde verileri localStorage'dan yükle ve günlük işlemleri getir
+        document.addEventListener("DOMContentLoaded", function() {
+            // localStorage'dan verileri yükle
+            loadFromLocalStorage();
+            
+            // Bugünkü işlemleri getir
+            getBugunIslemler();
+
+            // İşlem kaydet butonuna tıklama olayı ekle
+            document.getElementById("islemKaydet").addEventListener("click", kaydet);
+            
+            // İstatistik kartlarını güncelle
+            getIstatistikler();
+            
+            // Plaka input alanı değişiklik olayı
+            document.getElementById("plaka").addEventListener("input", function() {
+                let plakaValue = this.value.toUpperCase();
+                this.value = plakaValue;
+                document.getElementById("plakaOnizleme").textContent = plakaValue || "__________";
+            });
+        });
+        
+        // Plaka kontrolü yapan ve adım geçişini sağlayan fonksiyon
+        function plakaKontrolVeIleri() {
+            const plaka = document.getElementById("plaka").value.trim().toUpperCase();
+            
+            if (!plaka) {
+                alert("Lütfen araç plakasını girin!");
+                return;
+            }
+            
+            // Plaka değerini kaydet
+            aracPlaka = plaka;
+            
+            // Özet sayfasında plakayı göster
+            document.getElementById("ozetPlaka").textContent = plaka;
+            
+            // Sonraki adıma ilerle
+            ileri(2);
+        }
+        
+        // İstatistik kartlarını güncelleyen fonksiyon
+        function getIstatistikler() {
+            fetch('/Home/GetIstatistikler')
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Sunucu hatası: ' + response.status);
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    console.log("İstatistikler yüklendi:", data);
+                    
+                    // İstatistik kartlarını güncelle
+                    // Bugün gelen araçlar
+                    document.querySelector('.statistic-card.red .card-value').textContent = data.bugunGelenAracSayisi || '0';
+                    
+                    // Devam eden işlemler
+                    document.querySelector('.statistic-card.blue .card-value').textContent = data.devamEdenIslemSayisi || '0';
+                    
+                    // Bugünkü kazanç
+                    const bugunKazanc = data.bugunKazanc || 0;
+                    document.getElementById('bugunKazanc').textContent = bugunKazanc.toLocaleString('tr-TR') + '₺';
+                    
+                    // Tamamlanan işlemler
+                    document.querySelector('.statistic-card.orange .card-value').textContent = data.tamamlananIslemSayisi || '0';
+                })
+                .catch(error => {
+                    console.error("İstatistikler yüklenirken hata:", error);
+                });
+        }
+        
+        // Bugünkü işlemleri getiren fonksiyon
+        function getBugunIslemler() {
+            fetch('/Home/GetBugunIslemler')
+                .then(response => response.json())
+                .then(data => {
+                    if (data.length === 0) {
+                        document.getElementById("bugun-islemler").innerHTML = 
+                            '<div class="text-center py-3 text-muted"><i class="fas fa-info-circle"></i> Bugün işlem yapılmadı</div>';
+                        return;
+                    }
+                    
+                    let html = '<div class="list-group list-group-flush">';
+                    data.forEach(islem => {
+                        html += `
+                            <div class="list-group-item p-2">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <span class="badge badge-primary">${islem.plaka}</span>
+                                    <span class="text-success">${islem.toplamTutar} TL</span>
+                                </div>
+                                <small class="text-muted">${islem.islemTuru}</small>
+                            </div>
+                        `;
+                    });
+                    html += '</div>';
+                    document.getElementById("bugun-islemler").innerHTML = html;
+                })
+                .catch(error => {
+                    console.error("Bugünkü işlemler getirilemedi:", error);
+                    document.getElementById("bugun-islemler").innerHTML = 
+                        '<div class="text-center py-3 text-danger"><i class="fas fa-exclamation-triangle"></i> Veriler yüklenemedi</div>';
+                });
+        }
+        
+        // localStorage'a verileri kaydeden fonksiyon
+        function saveToLocalStorage() {
+            localStorage.setItem('tamirhane_plaka', aracPlaka);
+            localStorage.setItem('tamirhane_islemler', JSON.stringify(secilenIslemler));
+            localStorage.setItem('tamirhane_parcalar', JSON.stringify(secilenParcalar));
+        }
+        
+        // localStorage'dan verileri yükleyen fonksiyon
+        function loadFromLocalStorage() {
+            if (localStorage.getItem('tamirhane_plaka')) {
+                aracPlaka = localStorage.getItem('tamirhane_plaka');
+                document.getElementById("plaka").value = aracPlaka;
+                document.getElementById("plakaOnizleme").innerText = aracPlaka;
+            }
+            
+            if (localStorage.getItem('tamirhane_islemler')) {
+                secilenIslemler = JSON.parse(localStorage.getItem('tamirhane_islemler'));
+            }
+            
+            if (localStorage.getItem('tamirhane_parcalar')) {
+                secilenParcalar = JSON.parse(localStorage.getItem('tamirhane_parcalar'));
+            }
+        }
+        
+        function tabGoster(adim) {
+            // Default davranışı engelle
+            if (event) event.preventDefault();
+            
+            // Eğer ilk adım değilse ve plaka girilmediyse işlemi durdur
+            if (adim > 1) {
+                const plaka = document.getElementById("plaka").value.trim();
+                if (!plaka) {
+                    alert("Lütfen önce plaka giriniz!");
+                    ileri(1); // İlk adıma geri dön
+                    return;
                 }
             }
-        </ul>
+            
+            ileri(adim);
+        }
+
+        function ileri(adim) {
+            // Tab göstermeden önce kontrolleri yap
+            if (adim > 1) {
+                aracPlaka = document.getElementById("plaka").value.trim().toUpperCase();
+                if (!aracPlaka) {
+                    alert("Lütfen plaka giriniz!");
+                    return;
+                }
+                // Plaka formatını ön izlemeye ve özet ekranına yansıt
+                document.getElementById("plakaOnizleme").innerText = aracPlaka;
+                document.getElementById("ozetPlaka").innerText = aracPlaka;
+            }
+            
+            if (adim === 2) {
+                saveToLocalStorage();
+                
+                // İşçilik listesini getir
+                fetch('/Home/GetIslemler')
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error('Sunucu hatası: ' + response.status);
+                        }
+                        return response.json();
+                    })
+                    .then(data => {
+                        console.log("Gelen işçilik verileri:", data); // Hata ayıklama için
+                        let html = '';
+                        if (data && data.length > 0) {
+                            data.forEach(i => {
+                                // Önceden seçili mi kontrol et
+                                const secili = secilenIslemler.some(item => parseInt(item.id) === i.id);
+                                html += `
+                                    <tr>
+                                        <td class="text-center">
+                                            <div class="custom-control custom-checkbox">
+                                                <input type="checkbox" class="custom-control-input" id="islem-${i.id}" 
+                                                    name="islemler" value="${i.id}" data-fiyat="${i.fiyat}" 
+                                                    data-ad="${i.islemAdi}" ${secili ? 'checked' : ''} 
+                                                    onchange="islemDurumunuGuncelle(this)">
+                                                <label class="custom-control-label" for="islem-${i.id}"></label>
+                                            </div>
+                                        </td>
+                                        <td>${i.islemAdi}</td>
+                                        <td class="text-right">${i.fiyat} TL</td>
+                                    </tr>
+                                `;
+                            });
+                        } else {
+                            html = '<tr><td colspan="3" class="text-center">Hiç işçilik bulunamadı</td></tr>';
+                        }
+                        document.getElementById("islemListesi").innerHTML = html;
+                        
+                        // Önceden seçilenleri işaretle ve toplam fiyatı güncelle
+                        updateOzetBolumu();
+                    })
+                    .catch(error => {
+                        console.error("İşçilik listesi yüklenirken hata:", error);
+                        document.getElementById("islemListesi").innerHTML = 
+                            '<tr><td colspan="3" class="text-center text-danger">İşçilik listesi yüklenirken hata oluştu</td></tr>';
+                    });
+            }
+
+            if (adim === 3) {
+                saveToLocalStorage();
+                
+                // Parça listesini getir
+                fetch('/Home/GetParcalar')
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error('Sunucu hatası: ' + response.status);
+                        }
+                        return response.json();
+                    })
+                    .then(data => {
+                        console.log("Gelen parça verileri:", data); // Hata ayıklama için
+                        let html = '';
+                        if (data && data.length > 0) {
+                            data.forEach(p => {
+                                // Önceden seçili mi kontrol et
+                                const secili = secilenParcalar.some(item => parseInt(item.id) === p.id);
+                                html += `
+                                    <tr>
+                                        <td class="text-center">
+                                            <div class="custom-control custom-checkbox">
+                                                <input type="checkbox" class="custom-control-input" id="parca-${p.id}" 
+                                                    name="parcalar" value="${p.id}" data-fiyat="${p.fiyat}" 
+                                                    data-ad="${p.parcaAdi}" ${secili ? 'checked' : ''} 
+                                                    onchange="parcaDurumunuGuncelle(this)">
+                                                <label class="custom-control-label" for="parca-${p.id}"></label>
+                                            </div>
+                                        </td>
+                                        <td>${p.parcaAdi}</td>
+                                        <td class="text-right">${p.fiyat} TL</td>
+                                    </tr>
+                                `;
+                            });
+                        } else {
+                            html = '<tr><td colspan="3" class="text-center">Hiç parça bulunamadı</td></tr>';
+                        }
+                        document.getElementById("parcaListesi").innerHTML = html;
+                        
+                        // Önceden seçilenleri işaretle ve toplam fiyatı güncelle
+                        updateOzetBolumu();
+                    })
+                    .catch(error => {
+                        console.error("Parça listesi yüklenirken hata:", error);
+                        document.getElementById("parcaListesi").innerHTML = 
+                            '<tr><td colspan="3" class="text-center text-danger">Parça listesi yüklenirken hata oluştu</td></tr>';
+                    });
+            }
+
+            if (adim === 4) {
+                updateOzetBolumu();
+                saveToLocalStorage();
+            }
+
+            // Adımlar arasında geçiş
+            for (let i = 1; i <= 4; i++) {
+                const tabPane = document.getElementById(`step${i}`);
+                const tabLink = document.getElementById(`step${i}-tab`);
+                
+                if (i === adim) {
+                    tabPane.style.display = "block";
+                    tabLink.classList.add('active', 'bg-white');
+                    tabLink.classList.remove('text-white');
+                    tabLink.classList.add('text-primary');
+                } else {
+                    tabPane.style.display = "none";
+                    tabLink.classList.remove('active', 'bg-white', 'text-primary');
+                    tabLink.classList.add('text-white');
+                }
+            }
+        }
         
-        <a href="/HazirIslem/Ekle" class="btn btn-warning mt-3">Yeni İşlem Ekle</a>
-
-        <button type="button" class="btn btn-primary mt-3" onclick="ileri(3)">İlerle</button>
-    </form>
-</div>
-
-
-<!-- Step 3: Onay Ekranı (Başlangıçta Gizli) -->
-<div id="step3" style="display: none;">
-    <h3>Onay Ekranı</h3>
-    <p><strong>Plaka:</strong> <span id="onayPlaka"></span></p>
-    <h4>Seçilen İşlemler</h4>
-    <ul id="onayIslemler"></ul>
-    <button type="button" class="btn btn-success mt-3" onclick="kaydet()">Tamamla</button>
-</div>
-
-<script>
-    let aracPlaka = "";
-    let secilenIslemler = [];
-
-    function ileri(adim) {
-        if (adim === 2) {
-            aracPlaka = document.getElementById("plaka").value;
-            if (aracPlaka.trim() === "") {
-                alert("Lütfen plaka giriniz!");
-                return;
-            }
-        }
-        if (adim === 3) {
-            secilenIslemler = [];
-            document.querySelectorAll('input[name="islemler"]:checked').forEach((el) => {
-                secilenIslemler.push(el.value);
-            });
-
-            if (secilenIslemler.length === 0) {
-                alert("Lütfen en az bir işlem seçiniz!");
-                return;
-            }
-
-            document.getElementById("onayPlaka").innerText = aracPlaka;
-            let list = document.getElementById("onayIslemler");
-            list.innerHTML = "";
-            secilenIslemler.forEach((islemId) => {
-                let item = document.querySelector(`input[value="${islemId}"]`).parentElement.innerText;
-                let li = document.createElement("li");
-                li.innerText = item;
-                list.appendChild(li);
-            });
-        }
-
-        // Yeni adımı aç, ancak önceki adımları kapatma
-        document.getElementById(`step${adim}`).style.display = "block";
-    }
-
-    function kaydet() {
-        fetch("/Home/Kaydet", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ plaka: aracPlaka, secilenIslemler: secilenIslemler })
-        })
-        .then(response => response.json())
-        .then(data => {
-            if (data.success) {
-                alert("Araç ve işlemler başarıyla kaydedildi!");
-                location.reload();
+        // İşçilik seçildiğinde/seçim kaldırıldığında çağrılacak fonksiyon
+        function islemDurumunuGuncelle(checkbox) {
+            if (checkbox.checked) {
+                // Yeni işçilik seçildi, ekle
+                secilenIslemler.push({
+                    id: checkbox.value,
+                    ad: checkbox.getAttribute('data-ad'),
+                    fiyat: parseFloat(checkbox.getAttribute('data-fiyat'))
+                });
             } else {
-                alert("Bir hata oluştu: " + data.message);
+                // İşçilik seçimi kaldırıldı, çıkar
+                secilenIslemler = secilenIslemler.filter(item => item.id !== checkbox.value);
             }
-        })
-        .catch(error => {
-            console.error("Hata:", error);
-            alert("Kayıt sırasında bir hata oluştu. Konsolu kontrol edin.");
-        });
-    }
-</script>
+            
+            // LocalStorage'a kaydet ve özeti güncelle
+            saveToLocalStorage();
+            updateOzetBolumu();
+        }
+        
+        // Parça seçildiğinde/seçim kaldırıldığında çağrılacak fonksiyon
+        function parcaDurumunuGuncelle(checkbox) {
+            if (checkbox.checked) {
+                // Yeni parça seçildi, ekle
+                secilenParcalar.push({
+                    id: checkbox.value,
+                    ad: checkbox.getAttribute('data-ad'),
+                    fiyat: parseFloat(checkbox.getAttribute('data-fiyat'))
+                });
+            } else {
+                // Parça seçimi kaldırıldı, çıkar
+                secilenParcalar = secilenParcalar.filter(item => item.id !== checkbox.value);
+            }
+            
+            // LocalStorage'a kaydet ve özeti güncelle
+            saveToLocalStorage();
+            updateOzetBolumu();
+        }
+        
+        // Özet bölümünü güncelleyen fonksiyon
+        function updateOzetBolumu() {
+            // Plakayı özet ekranında göster
+            document.getElementById("ozetPlaka").innerText = aracPlaka;
+            
+            // İşçilik listesini güncelle
+            if (secilenIslemler.length > 0) {
+                const iscilikHTML = secilenIslemler.map(i => `
+                    <tr>
+                        <td>${i.ad}</td>
+                        <td class="text-end fw-medium">${i.fiyat.toLocaleString('tr-TR')}₺</td>
+                    </tr>
+                `).join('');
+                document.getElementById("ozetIslemler").innerHTML = iscilikHTML;
+                document.getElementById("ozetIscilikSayi").textContent = secilenIslemler.length;
+            } else {
+                document.getElementById("ozetIslemler").innerHTML = 
+                    '<tr><td colspan="2" class="text-center py-3 text-muted"><i class="fas fa-info-circle me-2"></i> Henüz işçilik seçilmedi</td></tr>';
+                document.getElementById("ozetIscilikSayi").textContent = "0";
+            }
+            
+            // Parça listesini güncelle
+            if (secilenParcalar.length > 0) {
+                const parcaHTML = secilenParcalar.map(p => `
+                    <tr>
+                        <td>${p.ad}</td>
+                        <td class="text-end fw-medium">${p.fiyat.toLocaleString('tr-TR')}₺</td>
+                    </tr>
+                `).join('');
+                document.getElementById("ozetParcalar").innerHTML = parcaHTML;
+                document.getElementById("ozetParcaSayi").textContent = secilenParcalar.length;
+            } else {
+                document.getElementById("ozetParcalar").innerHTML = 
+                    '<tr><td colspan="2" class="text-center py-3 text-muted"><i class="fas fa-info-circle me-2"></i> Henüz parça seçilmedi</td></tr>';
+                document.getElementById("ozetParcaSayi").textContent = "0";
+            }
+            
+            // Toplam fiyatı hesapla ve güncelle
+            const iscilikToplam = secilenIslemler.reduce((toplam, i) => toplam + i.fiyat, 0);
+            const parcaToplam = secilenParcalar.reduce((toplam, p) => toplam + p.fiyat, 0);
+            toplamFiyat = iscilikToplam + parcaToplam;
+            
+            document.getElementById("ozetIscilikToplam").innerText = iscilikToplam.toLocaleString('tr-TR') + "₺";
+            document.getElementById("ozetParcaToplam").innerText = parcaToplam.toLocaleString('tr-TR') + "₺";
+            document.getElementById("genelToplam").innerText = toplamFiyat.toLocaleString('tr-TR') + "₺";
+            
+            // Adım 2'deki işçilik toplamını güncelle
+            if (document.getElementById("secilen-iscilik-sayi")) {
+                document.getElementById("secilen-iscilik-sayi").textContent = secilenIslemler.length;
+                document.getElementById("secilen-iscilik-toplam").textContent = iscilikToplam.toLocaleString('tr-TR') + "₺";
+            }
+            
+            // Adım 3'teki parça toplamını güncelle
+            if (document.getElementById("secilen-parca-sayi")) {
+                document.getElementById("secilen-parca-sayi").textContent = secilenParcalar.length;
+                document.getElementById("secilen-parca-toplam").textContent = parcaToplam.toLocaleString('tr-TR') + "₺";
+            }
+        }
+
+        // İşlem kaydetme fonksiyonu
+        function kaydet() {
+            const plaka = aracPlaka;
+            
+            if (!plaka) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Hata!',
+                    text: 'Lütfen araç plakası girin!'
+                });
+                return;
+            }
+            
+            // Seçilen işlemler ve parçalar boş ise uyarı ver
+            if (secilenIslemler.length === 0 && secilenParcalar.length === 0) {
+                Swal.fire({
+                    icon: 'warning',
+                    title: 'Uyarı!',
+                    text: 'En az bir işçilik veya parça seçmelisiniz!'
+                });
+                return;
+            }
+            
+            const islemIdleri = secilenIslemler.map(i => i.id);
+            const parcaIdleri = secilenParcalar.map(p => p.id);
+            const notlar = document.getElementById("notlar").value;
+            
+            // İşlem kaydını gönder
+            fetch('/Home/Kaydet', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    plaka: plaka,
+                    islemIdleri: islemIdleri,
+                    parcaIdleri: parcaIdleri,
+                    notlar: notlar
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Başarılı!',
+                        text: data.message,
+                        confirmButtonText: 'Tamam'
+                    }).then((result) => {
+                        // İşlemler tamamlandıktan sonra formu sıfırla
+                        temizle();
+                        
+                        // İstatistikleri güncelle
+                        getIstatistikler();
+                        
+                        // Bugünkü işlemleri yeniden getir
+                        getBugunIslemler();
+                    });
+                } else {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Hata!',
+                        text: data.message
+                    });
+                }
+            })
+            .catch(error => {
+                console.error('İşlem kaydedilirken hata oluştu:', error);
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Hata!',
+                    text: 'İşlem kaydedilirken bir hata oluştu!'
+                });
+            });
+        }
+        
+        // Formu temizleyen fonksiyon
+        function temizle() {
+            // Plaka değerini temizle
+            aracPlaka = "";
+            document.getElementById("plaka").value = "";
+            document.getElementById("plakaOnizleme").textContent = "__________";
+            document.getElementById("ozetPlaka").textContent = "_______";
+            
+            // Seçilen işlemleri temizle
+            secilenIslemler = [];
+            document.getElementById("secilen-iscilik-sayi").textContent = "0";
+            document.getElementById("secilen-iscilik-toplam").textContent = "0.00₺";
+            document.getElementById("ozetIscilikSayi").textContent = "0";
+            document.getElementById("ozetIscilikToplam").textContent = "0.00₺";
+            document.getElementById("ozetIslemler").innerHTML = `
+                <tr>
+                    <td colspan="2" class="text-center py-3 text-muted">
+                        <i class="fas fa-info-circle me-2"></i> Henüz işçilik seçilmedi
+                    </td>
+                </tr>
+            `;
+            
+            // Seçilen parçaları temizle
+            secilenParcalar = [];
+            document.getElementById("secilen-parca-sayi").textContent = "0";
+            document.getElementById("secilen-parca-toplam").textContent = "0.00₺";
+            document.getElementById("ozetParcaSayi").textContent = "0";
+            document.getElementById("ozetParcaToplam").textContent = "0.00₺";
+            document.getElementById("ozetParcalar").innerHTML = `
+                <tr>
+                    <td colspan="2" class="text-center py-3 text-muted">
+                        <i class="fas fa-info-circle me-2"></i> Henüz parça seçilmedi
+                    </td>
+                </tr>
+            `;
+            
+            // Genel toplamı sıfırla
+            document.getElementById("genelToplam").textContent = "0.00₺";
+            
+            // Notları temizle
+            document.getElementById("notlar").value = "";
+            
+            // İlk adıma dön
+            tabGoster(1);
+            
+            // LocalStorage'dan verileri temizle
+            localStorage.removeItem('tamirhane_plaka');
+            localStorage.removeItem('tamirhane_islemler');
+            localStorage.removeItem('tamirhane_parcalar');
+        }
+    </script>
+}
+

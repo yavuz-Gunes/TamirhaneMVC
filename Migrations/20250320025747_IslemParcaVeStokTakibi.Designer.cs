@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TamirhaneMVC.Data;
 
@@ -11,9 +12,11 @@ using TamirhaneMVC.Data;
 namespace TamirhaneMVC.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250320025747_IslemParcaVeStokTakibi")]
+    partial class IslemParcaVeStokTakibi
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -94,36 +97,6 @@ namespace TamirhaneMVC.Migrations
                     b.ToTable("Islemler");
                 });
 
-            modelBuilder.Entity("TamirhaneMVC.Models.IslemDetay", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<decimal>("Fiyat")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<int>("HazirIslemId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("IslemAdi")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("IslemId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("HazirIslemId");
-
-                    b.HasIndex("IslemId");
-
-                    b.ToTable("IslemDetaylar");
-                });
-
             modelBuilder.Entity("TamirhaneMVC.Models.IslemParca", b =>
                 {
                     b.Property<int>("Id")
@@ -182,25 +155,6 @@ namespace TamirhaneMVC.Migrations
                         .IsRequired();
 
                     b.Navigation("Arac");
-                });
-
-            modelBuilder.Entity("TamirhaneMVC.Models.IslemDetay", b =>
-                {
-                    b.HasOne("TamirhaneMVC.Models.HazirIslem", "HazirIslem")
-                        .WithMany()
-                        .HasForeignKey("HazirIslemId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("TamirhaneMVC.Models.Islem", "Islem")
-                        .WithMany()
-                        .HasForeignKey("IslemId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("HazirIslem");
-
-                    b.Navigation("Islem");
                 });
 
             modelBuilder.Entity("TamirhaneMVC.Models.IslemParca", b =>

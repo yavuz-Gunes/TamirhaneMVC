@@ -1,0 +1,155 @@
+@model List<TamirhaneMVC.Models.Parca>
+
+@{
+    ViewData["Title"] = "Parça Yönetimi";
+}
+
+<div class="page-header d-flex align-items-center justify-content-between mb-4">
+    <div class="d-flex align-items-center">
+        <i class="fas fa-cogs text-primary fs-3 me-2"></i>
+        <h2 class="m-0">Parça Yönetimi</h2>
+    </div>
+    <div class="d-flex gap-2">
+        <a class="btn btn-outline-secondary d-flex align-items-center" href="/Home/TekSayfa">
+            <i class="fas fa-arrow-left me-2"></i> İşlem Paneline Dön
+        </a>
+        <a class="btn btn-primary d-flex align-items-center" href="/Parca/Ekle">
+            <i class="fas fa-plus-circle me-2"></i> Yeni Parça Ekle
+        </a>
+    </div>
+</div>
+
+<div class="row mb-4">
+    <div class="col-md-3 mb-3 mb-md-0">
+        <div class="statistic-card red">
+            <div>
+                <div class="card-value">@Model?.Count ?? 0</div>
+                <div class="card-label">Parça Çeşidi</div>
+            </div>
+            <i class="fas fa-cog card-icon"></i>
+        </div>
+    </div>
+    <div class="col-md-3 mb-3 mb-md-0">
+        <div class="statistic-card blue">
+            <div>
+                <div class="card-value">@(Model?.Sum(p => p.StokMiktari) ?? 0)</div>
+                <div class="card-label">Toplam Stok</div>
+            </div>
+            <i class="fas fa-boxes card-icon"></i>
+        </div>
+    </div>
+    <div class="col-md-3 mb-3 mb-md-0">
+        <div class="statistic-card green">
+            <div>
+                <div class="card-value">@(Model?.Sum(p => p.Fiyat * p.StokMiktari).ToString("N0") ?? "0")₺</div>
+                <div class="card-label">Stok Değeri</div>
+            </div>
+            <i class="fas fa-lira-sign card-icon"></i>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="statistic-card orange">
+            <div>
+                <div class="card-value">@(Model?.Count(p => p.StokMiktari < 5) ?? 0)</div>
+                <div class="card-label">Kritik Stok</div>
+            </div>
+            <i class="fas fa-exclamation-triangle card-icon"></i>
+        </div>
+    </div>
+</div>
+
+<div class="card shadow-sm">
+    <div class="card-header bg-light">
+        <div class="row align-items-center">
+            <div class="col-md-6">
+                <h5 class="card-title mb-0"><i class="fas fa-list-check text-primary me-2"></i> Parça Listesi</h5>
+            </div>
+            <div class="col-md-6">
+                <div class="input-group">
+                    <input type="text" class="form-control" id="parcaAra" placeholder="Parça Ara...">
+                    <button class="btn btn-outline-secondary" type="button">
+                        <i class="fas fa-search"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="card-body p-0">
+        <div class="table-responsive">
+            <table class="table table-hover mb-0">
+                <thead class="table-light">
+                    <tr>
+                        <th style="width: 60px;" class="text-center">#</th>
+                        <th>Parça Adı</th>
+                        <th class="text-center" style="width: 120px;">Stok</th>
+                        <th class="text-end" style="width: 150px;">Fiyat (₺)</th>
+                        <th class="text-center" style="width: 180px;">İşlemler</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if(Model == null || !Model.Any()) {
+                        <tr>
+                            <td colspan="5" class="text-center py-4">
+                                <i class="fas fa-exclamation-triangle text-warning me-2"></i> Henüz parça tanımlanmamış
+                            </td>
+                        </tr>
+                    } else {
+                        @foreach (var parca in Model)
+                        {
+                            <tr>
+                                <td class="text-center">@parca.Id</td>
+                                <td>
+                                    <div class="d-flex align-items-center">
+                                        <i class="fas fa-cog text-primary me-2"></i>
+                                        <span>@parca.ParcaAdi</span>
+                                    </div>
+                                </td>
+                                <td class="text-center">
+                                    @if (parca.StokMiktari < 5)
+                                    {
+                                        <span class="badge bg-danger">@parca.StokMiktari</span>
+                                    }
+                                    else if (parca.StokMiktari < 10)
+                                    {
+                                        <span class="badge bg-warning text-dark">@parca.StokMiktari</span>
+                                    }
+                                    else
+                                    {
+                                        <span class="badge bg-success">@parca.StokMiktari</span>
+                                    }
+                                </td>
+                                <td class="text-end fw-medium">@parca.Fiyat.ToString("N2")</td>
+                                <td class="text-center">
+                                    <div class="btn-group" role="group">
+                                        <a href="/Parca/StokEkle/@parca.Id" class="btn btn-sm btn-success">
+                                            <i class="fas fa-plus"></i>
+                                        </a>
+                                        <a href="/Parca/Duzenle/@parca.Id" class="btn btn-sm btn-primary">
+                                            <i class="fas fa-edit"></i>
+                                        </a>
+                                        <a href="/Parca/Sil/@parca.Id" class="btn btn-sm btn-danger">
+                                            <i class="fas fa-trash"></i>
+                                        </a>
+                                    </div>
+                                </td>
+                            </tr>
+                        }
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        $(document).ready(function(){
+            $("#parcaAra").on("keyup", function() {
+                var value = $(this).val().toLowerCase();
+                $("tbody tr").filter(function() {
+                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                });
+            });
+        });
+    </script>
+} 
