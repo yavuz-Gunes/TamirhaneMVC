@@ -229,4 +229,12 @@ C:\Project\TamirhaneMVC\obj\Debug\net9.0\refint\TamirhaneMVC.dll
 C:\Project\TamirhaneMVC\obj\Debug\net9.0\TamirhaneMVC.pdb
 C:\Project\TamirhaneMVC\obj\Debug\net9.0\TamirhaneMVC.genruntimeconfig.cache
 C:\Project\TamirhaneMVC\obj\Debug\net9.0\ref\TamirhaneMVC.dll
-C:\Project\TamirhaneMVC\obj\Debug\net9.0\compressed\q9k01qh52j-gvzrbcj6nm.gz
+C:\Project\TamirhaneMVC\obj\Debug\net9.0\compressed\q9k01qh52j-y5jbf58ypa.gz
+C:\Project\TamirhaneMVC\bin\Debug\net9.0\browser-tools-mcp\browser-tools-mcp\package-lock.json
+C:\Project\TamirhaneMVC\bin\Debug\net9.0\browser-tools-mcp\browser-tools-mcp\package.json
+C:\Project\TamirhaneMVC\bin\Debug\net9.0\browser-tools-mcp\browser-tools-mcp\tsconfig.json
+C:\Project\TamirhaneMVC\bin\Debug\net9.0\browser-tools-mcp\browser-tools-server\package-lock.json
+C:\Project\TamirhaneMVC\bin\Debug\net9.0\browser-tools-mcp\browser-tools-server\package.json
+C:\Project\TamirhaneMVC\bin\Debug\net9.0\browser-tools-mcp\browser-tools-server\tsconfig.json
+C:\Project\TamirhaneMVC\bin\Debug\net9.0\browser-tools-mcp\chrome-extension\manifest.json
+C:\Project\TamirhaneMVC\bin\Debug\net9.0\browser-tools-mcp\package-lock.json

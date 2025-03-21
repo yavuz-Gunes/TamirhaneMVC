@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "yx9go5Bot4ZtAzhJaHCqWQWyfXoCjl7X8OoFnP6rdfk=",
+  "Hash": "Gsr5U8/8Yp/dx5KV+Aka+jm/HvjvXBiZbA69D3qR1Sg=",
   "Source": "TamirhaneMVC",
   "BasePath": "_content/TamirhaneMVC",
   "Mode": "Default",
@@ -899,12 +899,12 @@
       "OriginalItemSpec": "C:\\Project\\TamirhaneMVC\\wwwroot\\lib\\jquery-validation\\LICENSE.md"
     },
     {
-      "Identity": "C:\\Project\\TamirhaneMVC\\obj\\Debug\\net9.0\\compressed\\q9k01qh52j-gvzrbcj6nm.gz",
+      "Identity": "C:\\Project\\TamirhaneMVC\\obj\\Debug\\net9.0\\compressed\\q9k01qh52j-y5jbf58ypa.gz",
       "SourceId": "TamirhaneMVC",
       "SourceType": "Discovered",
       "ContentRoot": "C:\\Project\\TamirhaneMVC\\obj\\Debug\\net9.0\\compressed\\",
       "BasePath": "_content/TamirhaneMVC",
-      "RelativePath": "css/site#[.{fingerprint=gvzrbcj6nm}]?.css.gz",
+      "RelativePath": "css/site#[.{fingerprint=y5jbf58ypa}]?.css.gz",
       "AssetKind": "All",
       "AssetMode": "All",
       "AssetRole": "Alternative",
@@ -913,8 +913,8 @@
       "RelatedAsset": "C:\\Project\\TamirhaneMVC\\wwwroot\\css\\site.css",
       "AssetTraitName": "Content-Encoding",
       "AssetTraitValue": "gzip",
-      "Fingerprint": "luv561u8lw",
-      "Integrity": "fXoDLn7fFtR73ZZrb4Mc72y3phvgnLg5xdo2KS+8KqE=",
+      "Fingerprint": "zc6tyr8x9c",
+      "Integrity": "jcxMBY1Sn07NCMIlnpFtt7Dye7AFrUza49NVlP1XJ+s=",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "C:\\Project\\TamirhaneMVC\\wwwroot\\css\\site.css"
@@ -1417,8 +1417,8 @@
       "RelatedAsset": "",
       "AssetTraitName": "",
       "AssetTraitValue": "",
-      "Fingerprint": "gvzrbcj6nm",
-      "Integrity": "XDngMoqd8Z1Prg6HhnrcUc5ILRhGZAUPy05XKKHmuP4=",
+      "Fingerprint": "y5jbf58ypa",
+      "Integrity": "xti7xx2vLkVzvSs+gqRKv3krt9Hi4GU/XQoRe9xh/BE=",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\css\\site.css"
@@ -2729,12 +2729,12 @@
   "Endpoints": [
     {
       "Route": "css/site.css",
-      "AssetFile": "C:\\Project\\TamirhaneMVC\\obj\\Debug\\net9.0\\compressed\\q9k01qh52j-gvzrbcj6nm.gz",
+      "AssetFile": "C:\\Project\\TamirhaneMVC\\obj\\Debug\\net9.0\\compressed\\q9k01qh52j-y5jbf58ypa.gz",
       "Selectors": [
         {
           "Name": "Content-Encoding",
           "Value": "gzip",
-          "Quality": "0.000340599455"
+          "Quality": "0.000343053173"
         }
       ],
       "ResponseHeaders": [
@@ -2744,15 +2744,15 @@
         },
         {
           "Name": "Content-Length",
-          "Value": "2935"
+          "Value": "2914"
         },
         {
           "Name": "ETag",
-          "Value": "\"fXoDLn7fFtR73ZZrb4Mc72y3phvgnLg5xdo2KS+8KqE=\""
+          "Value": "\"jcxMBY1Sn07NCMIlnpFtt7Dye7AFrUza49NVlP1XJ+s=\""
         },
         {
           "Name": "Last-Modified",
-          "Value": "Thu, 20 Mar 2025 03:36:49 GMT"
+          "Value": "Thu, 20 Mar 2025 21:26:20 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -2772,13 +2772,13 @@
         },
         {
           "Name": "ETag",
-          "Value": "W/\"XDngMoqd8Z1Prg6HhnrcUc5ILRhGZAUPy05XKKHmuP4=\""
+          "Value": "W/\"xti7xx2vLkVzvSs+gqRKv3krt9Hi4GU/XQoRe9xh/BE=\""
         }
       ],
       "EndpointProperties": [
         {
           "Name": "integrity",
-          "Value": "sha256-XDngMoqd8Z1Prg6HhnrcUc5ILRhGZAUPy05XKKHmuP4="
+          "Value": "sha256-xti7xx2vLkVzvSs+gqRKv3krt9Hi4GU/XQoRe9xh/BE="
         }
       ]
     },
@@ -2793,7 +2793,7 @@
         },
         {
           "Name": "Content-Length",
-          "Value": "13669"
+          "Value": "12989"
         },
         {
           "Name": "Content-Type",
@@ -2801,11 +2801,11 @@
         },
         {
           "Name": "ETag",
-          "Value": "\"XDngMoqd8Z1Prg6HhnrcUc5ILRhGZAUPy05XKKHmuP4=\""
+          "Value": "\"xti7xx2vLkVzvSs+gqRKv3krt9Hi4GU/XQoRe9xh/BE=\""
         },
         {
           "Name": "Last-Modified",
-          "Value": "Thu, 20 Mar 2025 03:36:49 GMT"
+          "Value": "Thu, 20 Mar 2025 21:26:20 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -2815,13 +2815,13 @@
       "EndpointProperties": [
         {
           "Name": "integrity",
-          "Value": "sha256-XDngMoqd8Z1Prg6HhnrcUc5ILRhGZAUPy05XKKHmuP4="
+          "Value": "sha256-xti7xx2vLkVzvSs+gqRKv3krt9Hi4GU/XQoRe9xh/BE="
         }
       ]
     },
     {
       "Route": "css/site.css.gz",
-      "AssetFile": "C:\\Project\\TamirhaneMVC\\obj\\Debug\\net9.0\\compressed\\q9k01qh52j-gvzrbcj6nm.gz",
+      "AssetFile": "C:\\Project\\TamirhaneMVC\\obj\\Debug\\net9.0\\compressed\\q9k01qh52j-y5jbf58ypa.gz",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -2830,7 +2830,7 @@
         },
         {
           "Name": "Content-Length",
-          "Value": "2935"
+          "Value": "2914"
         },
         {
           "Name": "Content-Type",
@@ -2838,11 +2838,11 @@
         },
         {
           "Name": "ETag",
-          "Value": "\"fXoDLn7fFtR73ZZrb4Mc72y3phvgnLg5xdo2KS+8KqE=\""
+          "Value": "\"jcxMBY1Sn07NCMIlnpFtt7Dye7AFrUza49NVlP1XJ+s=\""
         },
         {
           "Name": "Last-Modified",
-          "Value": "Thu, 20 Mar 2025 03:36:49 GMT"
+          "Value": "Thu, 20 Mar 2025 21:26:20 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -2860,18 +2860,18 @@
       "EndpointProperties": [
         {
           "Name": "integrity",
-          "Value": "sha256-fXoDLn7fFtR73ZZrb4Mc72y3phvgnLg5xdo2KS+8KqE="
+          "Value": "sha256-jcxMBY1Sn07NCMIlnpFtt7Dye7AFrUza49NVlP1XJ+s="
         }
       ]
     },
     {
-      "Route": "css/site.gvzrbcj6nm.css",
-      "AssetFile": "C:\\Project\\TamirhaneMVC\\obj\\Debug\\net9.0\\compressed\\q9k01qh52j-gvzrbcj6nm.gz",
+      "Route": "css/site.y5jbf58ypa.css",
+      "AssetFile": "C:\\Project\\TamirhaneMVC\\obj\\Debug\\net9.0\\compressed\\q9k01qh52j-y5jbf58ypa.gz",
       "Selectors": [
         {
           "Name": "Content-Encoding",
           "Value": "gzip",
-          "Quality": "0.000340599455"
+          "Quality": "0.000343053173"
         }
       ],
       "ResponseHeaders": [
@@ -2881,15 +2881,15 @@
         },
         {
           "Name": "Content-Length",
-          "Value": "2935"
+          "Value": "2914"
         },
         {
           "Name": "ETag",
-          "Value": "\"fXoDLn7fFtR73ZZrb4Mc72y3phvgnLg5xdo2KS+8KqE=\""
+          "Value": "\"jcxMBY1Sn07NCMIlnpFtt7Dye7AFrUza49NVlP1XJ+s=\""
         },
         {
           "Name": "Last-Modified",
-          "Value": "Thu, 20 Mar 2025 03:36:49 GMT"
+          "Value": "Thu, 20 Mar 2025 21:26:20 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -2909,13 +2909,13 @@
         },
         {
           "Name": "ETag",
-          "Value": "W/\"XDngMoqd8Z1Prg6HhnrcUc5ILRhGZAUPy05XKKHmuP4=\""
+          "Value": "W/\"xti7xx2vLkVzvSs+gqRKv3krt9Hi4GU/XQoRe9xh/BE=\""
         }
       ],
       "EndpointProperties": [
         {
           "Name": "fingerprint",
-          "Value": "gvzrbcj6nm"
+          "Value": "y5jbf58ypa"
         },
         {
           "Name": "label",
@@ -2923,12 +2923,12 @@
         },
         {
           "Name": "integrity",
-          "Value": "sha256-XDngMoqd8Z1Prg6HhnrcUc5ILRhGZAUPy05XKKHmuP4="
+          "Value": "sha256-xti7xx2vLkVzvSs+gqRKv3krt9Hi4GU/XQoRe9xh/BE="
         }
       ]
     },
     {
-      "Route": "css/site.gvzrbcj6nm.css",
+      "Route": "css/site.y5jbf58ypa.css",
       "AssetFile": "C:\\Project\\TamirhaneMVC\\wwwroot\\css\\site.css",
       "Selectors": [],
       "ResponseHeaders": [
@@ -2938,7 +2938,7 @@
         },
         {
           "Name": "Content-Length",
-          "Value": "13669"
+          "Value": "12989"
         },
         {
           "Name": "Content-Type",
@@ -2946,11 +2946,11 @@
         },
         {
           "Name": "ETag",
-          "Value": "\"XDngMoqd8Z1Prg6HhnrcUc5ILRhGZAUPy05XKKHmuP4=\""
+          "Value": "\"xti7xx2vLkVzvSs+gqRKv3krt9Hi4GU/XQoRe9xh/BE=\""
         },
         {
           "Name": "Last-Modified",
-          "Value": "Thu, 20 Mar 2025 03:36:49 GMT"
+          "Value": "Thu, 20 Mar 2025 21:26:20 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -2960,7 +2960,7 @@
       "EndpointProperties": [
         {
           "Name": "fingerprint",
-          "Value": "gvzrbcj6nm"
+          "Value": "y5jbf58ypa"
         },
         {
           "Name": "label",
@@ -2968,13 +2968,13 @@
         },
         {
           "Name": "integrity",
-          "Value": "sha256-XDngMoqd8Z1Prg6HhnrcUc5ILRhGZAUPy05XKKHmuP4="
+          "Value": "sha256-xti7xx2vLkVzvSs+gqRKv3krt9Hi4GU/XQoRe9xh/BE="
         }
       ]
     },
     {
-      "Route": "css/site.gvzrbcj6nm.css.gz",
-      "AssetFile": "C:\\Project\\TamirhaneMVC\\obj\\Debug\\net9.0\\compressed\\q9k01qh52j-gvzrbcj6nm.gz",
+      "Route": "css/site.y5jbf58ypa.css.gz",
+      "AssetFile": "C:\\Project\\TamirhaneMVC\\obj\\Debug\\net9.0\\compressed\\q9k01qh52j-y5jbf58ypa.gz",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -2983,7 +2983,7 @@
         },
         {
           "Name": "Content-Length",
-          "Value": "2935"
+          "Value": "2914"
         },
         {
           "Name": "Content-Type",
@@ -2991,11 +2991,11 @@
         },
         {
           "Name": "ETag",
-          "Value": "\"fXoDLn7fFtR73ZZrb4Mc72y3phvgnLg5xdo2KS+8KqE=\""
+          "Value": "\"jcxMBY1Sn07NCMIlnpFtt7Dye7AFrUza49NVlP1XJ+s=\""
         },
         {
           "Name": "Last-Modified",
-          "Value": "Thu, 20 Mar 2025 03:36:49 GMT"
+          "Value": "Thu, 20 Mar 2025 21:26:20 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -3013,7 +3013,7 @@
       "EndpointProperties": [
         {
           "Name": "fingerprint",
-          "Value": "gvzrbcj6nm"
+          "Value": "y5jbf58ypa"
         },
         {
           "Name": "label",
@@ -3021,7 +3021,7 @@
         },
         {
           "Name": "integrity",
-          "Value": "sha256-fXoDLn7fFtR73ZZrb4Mc72y3phvgnLg5xdo2KS+8KqE="
+          "Value": "sha256-jcxMBY1Sn07NCMIlnpFtt7Dye7AFrUza49NVlP1XJ+s="
         }
       ]
     },
