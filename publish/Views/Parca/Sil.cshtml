@@ -1,0 +1,18 @@
+@model TamirhaneMVC.Models.Parca
+
+@{
+    ViewData["Title"] = "Parça Sil";
+}
+
+<h2>Parça Silme Onayı</h2>
+
+<div class="alert alert-danger">
+    <h4>@Model.ParcaAdi parçasını silmek istediğinize emin misiniz?</h4>
+    <p>Bu işlem geri alınamaz!</p>
+</div>
+
+<form asp-action="SilOnay" method="post">
+    <input type="hidden" name="id" value="@Model.Id" />
+    <button type="submit" class="btn btn-danger">Evet, Sil</button>
+    <a asp-action="Index" class="btn btn-secondary">İptal</a>
+</form> 

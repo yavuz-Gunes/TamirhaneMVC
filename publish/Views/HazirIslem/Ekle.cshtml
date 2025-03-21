@@ -1,0 +1,20 @@
+@model TamirhaneMVC.Models.HazirIslem
+
+@{
+    ViewData["Title"] = "Yeni İşlem Ekle";
+}
+
+<h2>Yeni Hazır İşlem Ekle</h2>
+
+<form method="post">
+    <div class="form-group">
+        <label>İşlem Adı</label>
+        <input type="text" asp-for="IslemAdi" class="form-control" required />
+    </div>
+    <div class="form-group">
+        <label>Fiyat</label>
+        <input type="number" asp-for="Fiyat" class="form-control" required />
+    </div>
+    <button type="submit" class="btn btn-success mt-3">Kaydet</button>
+    <a href="/HazirIslem/Index" class="btn btn-secondary mt-3">İptal</a>
+</form>

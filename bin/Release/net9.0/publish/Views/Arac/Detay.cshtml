@@ -1,0 +1,118 @@
+@model TamirhaneMVC.Models.Arac
+
+@{
+    ViewData["Title"] = "Araç Detayı";
+}
+
+<h2>Araç Detayı</h2>
+<div class="card mb-4">
+    <div class="card-header">
+        <h4>Araç Bilgileri</h4>
+    </div>
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-6">
+                <p><strong>Plaka:</strong> @Model.Plaka</p>
+            </div>
+            <div class="col-md-6">
+                <p><strong>Giriş Tarihi:</strong> @Model.GirişTarihi.ToString("dd/MM/yyyy HH:mm")</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-header d-flex justify-content-between align-items-center">
+        <h4>Yapılan İşlemler</h4>
+        <a href="/Home/IslemEkle/@Model.Id" class="btn btn-success">+ İşlem Ekle</a>
+    </div>
+    <div class="card-body">
+        @if (Model.Islemler != null && Model.Islemler.Count > 0)
+        {
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>İşlem Tarihi</th>
+                        <th>İşlem Adı</th>
+                        <th>Fiyat</th>
+                        <th>Detay</th>
+                        <th>İşlemler</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var islem in Model.Islemler.OrderByDescending(i => i.IslemTarihi))
+                    {
+                        <tr>
+                            <td>@islem.IslemTarihi.ToString("dd/MM/yyyy HH:mm")</td>
+                            <td>@islem.IslemAdi</td>
+                            <td>@islem.Fiyat.ToString("N2") ₺</td>
+                            <td>@(string.IsNullOrEmpty(islem.IslemDetayi) ? "-" : islem.IslemDetayi)</td>
+                            <td>
+                                <button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#parcaModal-@islem.Id">
+                                    Kullanılan Parçalar
+                                </button>
+                            </td>
+                        </tr>
+
+                        <!-- Parça Detay Modal -->
+                        <div class="modal fade" id="parcaModal-@islem.Id" tabindex="-1" role="dialog" aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title">Kullanılan Parçalar - @islem.IslemAdi</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        @if (islem.KullanilanParcalar != null && islem.KullanilanParcalar.Count > 0)
+                                        {
+                                            <table class="table table-sm">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Parça Adı</th>
+                                                        <th>Miktar</th>
+                                                        <th>Birim Fiyat</th>
+                                                        <th>Toplam</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    @foreach (var parcaKullanim in islem.KullanilanParcalar)
+                                                    {
+                                                        <tr>
+                                                            <td>@parcaKullanim.Parca.ParcaAdi</td>
+                                                            <td>@parcaKullanim.KullanilanMiktar</td>
+                                                            <td>@parcaKullanim.Parca.Fiyat.ToString("N2") ₺</td>
+                                                            <td>@((parcaKullanim.KullanilanMiktar * parcaKullanim.Parca.Fiyat).ToString("N2")) ₺</td>
+                                                        </tr>
+                                                    }
+                                                </tbody>
+                                            </table>
+                                        }
+                                        else
+                                        {
+                                            <p class="text-muted">Bu işlem için kullanılan parça bulunmamaktadır.</p>
+                                        }
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Kapat</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </tbody>
+            </table>
+        }
+        else
+        {
+            <div class="alert alert-info">
+                Bu araç için henüz işlem kaydı bulunmamaktadır.
+            </div>
+        }
+    </div>
+</div>
+
+<div class="mt-3">
+    <a href="/Arac/Index" class="btn btn-secondary">Araç Listesine Dön</a>
+</div> 

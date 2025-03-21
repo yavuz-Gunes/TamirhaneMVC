@@ -4,6 +4,11 @@
     <TargetFramework>net9.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
+    <EnableDefaultContentItems>false</EnableDefaultContentItems>
+    <DisableScopedCss>true</DisableScopedCss>
+    <RazorCompileOnPublish>false</RazorCompileOnPublish>
+    <PreserveCompilationContext>true</PreserveCompilationContext>
+    <MvcRazorCompileOnPublish>false</MvcRazorCompileOnPublish>
   </PropertyGroup>
 
   <ItemGroup>
@@ -16,6 +21,14 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
+  </ItemGroup>
+
+  <!-- Content klasörleri -->
+  <ItemGroup>
+    <Content Include="Views\**\*.cshtml" CopyToPublishDirectory="Always" />
+    <Content Include="wwwroot\**\*" CopyToPublishDirectory="PreserveNewest" />
+    <Content Include="appsettings.json" CopyToPublishDirectory="PreserveNewest" />
+    <Content Include="appsettings.*.json" CopyToPublishDirectory="PreserveNewest" />
   </ItemGroup>
 
 </Project>

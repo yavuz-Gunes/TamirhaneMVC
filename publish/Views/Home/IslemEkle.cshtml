@@ -1,0 +1,125 @@
+@model TamirhaneMVC.Controllers.IslemEkleModel
+
+@{
+    ViewData["Title"] = "İşlem Ekle";
+}
+
+<h2>Araca İşlem Ekle</h2>
+
+<div class="card mb-4">
+    <div class="card-header">
+        <h4>Araç Bilgileri</h4>
+    </div>
+    <div class="card-body">
+        <p><strong>Plaka:</strong> @ViewBag.Plaka</p>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-8">
+        <div class="card">
+            <div class="card-header">
+                <h4>Yeni İşlem Ekle</h4>
+            </div>
+            <div class="card-body">
+                <form method="post" action="/Home/IslemEkle">
+                    <input type="hidden" name="AracId" value="@ViewBag.AracId" />
+                    
+                    <div class="form-group">
+                        <label for="IslemAdi">İşlem Adı</label>
+                        <input type="text" class="form-control" id="IslemAdi" name="IslemAdi" required />
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="Fiyat">Fiyat (TL)</label>
+                        <input type="number" class="form-control" id="Fiyat" name="Fiyat" min="0" step="0.01" required />
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="IslemDetayi">İşlem Detayı</label>
+                        <textarea class="form-control" id="IslemDetayi" name="IslemDetayi" rows="3"></textarea>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Kullanılacak Parçalar</label>
+                        <div class="card">
+                            <div class="card-body">
+                                @if (ViewBag.Parcalar != null && ((List<TamirhaneMVC.Models.Parca>)ViewBag.Parcalar).Count > 0)
+                                {
+                                    <div class="row">
+                                        @foreach (var parca in (List<TamirhaneMVC.Models.Parca>)ViewBag.Parcalar)
+                                        {
+                                            <div class="col-md-6 mb-2">
+                                                <div class="custom-control custom-checkbox">
+                                                    <input type="checkbox" class="custom-control-input" id="parca-@parca.Id" name="SecilenParcalar" value="@parca.Id">
+                                                    <label class="custom-control-label" for="parca-@parca.Id">
+                                                        @parca.ParcaAdi - @parca.Fiyat TL (Stok: @parca.StokMiktari)
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        }
+                                    </div>
+                                }
+                                else
+                                {
+                                    <div class="alert alert-warning">
+                                        Stokta parça bulunmamaktadır veya tüm parçaların stok miktarı 0'dır.
+                                    </div>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-primary">İşlemi Kaydet</button>
+                        <a href="/Arac/Detay/@ViewBag.AracId" class="btn btn-secondary">İptal</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-4">
+        <div class="card">
+            <div class="card-header">
+                <h4>Hazır İşlemler</h4>
+            </div>
+            <div class="card-body">
+                @if (ViewBag.HazirIslemler != null && ((List<TamirhaneMVC.Models.HazirIslem>)ViewBag.HazirIslemler).Count > 0)
+                {
+                    <div class="list-group">
+                        @foreach (var hazirIslem in (List<TamirhaneMVC.Models.HazirIslem>)ViewBag.HazirIslemler)
+                        {
+                            <button type="button" class="list-group-item list-group-item-action hazir-islem-sec" 
+                                    data-ad="@hazirIslem.IslemAdi" 
+                                    data-fiyat="@hazirIslem.Fiyat">
+                                @hazirIslem.IslemAdi - @hazirIslem.Fiyat TL
+                            </button>
+                        }
+                    </div>
+                }
+                else
+                {
+                    <div class="alert alert-info">
+                        Henüz hazır işlem tanımlanmamış.
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            // Hazır işlem seçildiğinde form alanlarını doldur
+            $('.hazir-islem-sec').click(function () {
+                var islemAdi = $(this).data('ad');
+                var fiyat = $(this).data('fiyat');
+                
+                $('#IslemAdi').val(islemAdi);
+                $('#Fiyat').val(fiyat);
+            });
+        });
+    </script>
+} 

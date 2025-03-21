@@ -1,0 +1,42 @@
+@model TamirhaneMVC.Models.Parca
+
+@{
+    ViewData["Title"] = "Stok Ekle";
+}
+
+<h2>Parça Stoğu Güncelle</h2>
+
+<div class="row">
+    <div class="col-md-6">
+        <div class="card mb-4">
+            <div class="card-header">
+                <h4>Parça Bilgileri</h4>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <p><strong>Parça Adı:</strong> @Model.ParcaAdi</p>
+                    </div>
+                    <div class="col-md-6">
+                        <p><strong>Mevcut Stok:</strong> @Model.StokMiktari</p>
+                    </div>
+                    <div class="col-md-6">
+                        <p><strong>Birim Fiyat:</strong> @Model.Fiyat TL</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <form asp-action="StokEkleOnay" method="post">
+            <input type="hidden" asp-for="Id" />
+            <div class="form-group">
+                <label for="EklenecekMiktar">Eklenecek Miktar</label>
+                <input id="EklenecekMiktar" name="EklenecekMiktar" class="form-control" type="number" min="1" value="1" required />
+            </div>
+            <div class="form-group">
+                <button type="submit" class="btn btn-success">Stok Ekle</button>
+                <a asp-action="Index" class="btn btn-secondary">İptal</a>
+            </div>
+        </form>
+    </div>
+</div> 
